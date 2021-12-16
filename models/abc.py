@@ -1,6 +1,7 @@
 import functools
 import torch
 import torch.nn as nn
+from torch.nn.utils import spectral_norm
 from torchsummary import summary
 
 
@@ -109,4 +110,40 @@ class G(nn.Module):
     def forward(self, input):
         return self.model(input)
 
+class SD(nn.Module):
+    def __init__(self, input_nc=6, ndf=64, n_layers=3, norm_layer=nn.BatchNorm2d):
+        super(SD, self).__init__()
+        if type(norm_layer) == functools.partial:  # no need to use bias as BatchNorm2d has affine parameters
+            use_bias = norm_layer.func != nn.BatchNorm2d
+        else:
+            use_bias = norm_layer != nn.BatchNorm2d
+        kw = 4
+        padw = 1
+        conv=spectral_norm(nn.Conv2d(input_nc, ndf, kernel_size=kw, stride=2, padding=padw))
+        sequence = [conv, nn.LeakyReLU(0.2, True)]
+        nf_mult = 1
+        nf_mult_prev = 1
+        for n in range(1, n_layers):  # gradually increase the number of filters
+            nf_mult_prev = nf_mult
+            nf_mult = min(2 ** n, 8)
+            conv1 = spectral_norm(nn.Conv2d(ndf * nf_mult_prev, ndf * nf_mult, kernel_size=kw, stride=2, padding=padw, bias=use_bias))
+            sequence += [
+                conv1,
+                norm_layer(ndf * nf_mult),
+                nn.LeakyReLU(0.2, True)
+            ]
 
+        nf_mult_prev = nf_mult
+        nf_mult = min(2 ** n_layers, 8)
+        conv2 = spectral_norm(nn.Conv2d(ndf * nf_mult_prev, ndf * nf_mult, kernel_size=kw, stride=1, padding=padw, bias=use_bias))
+        sequence += [
+            conv2,
+            norm_layer(ndf * nf_mult),
+            nn.LeakyReLU(0.2, True)
+        ]
+        conv3 = spectral_norm(nn.Conv2d(ndf * nf_mult, 1, kernel_size=kw, stride=1, padding=padw))
+        sequence += [conv3]  # output 1 channel prediction map
+        self.model = nn.Sequential(*sequence)
+
+    def forward(self, input):
+        return self.model(input)

@@ -21,4 +21,9 @@ for i in os.listdir('./dataset/train'):
         else:
             cv2.imwrite('./train/{}.jpg'.format(a),img,[int(cv2.IMWRITE_JPEG_QUALITY),100])
             a=a+1
+    else:
+        if img2<1 and img6<1 and img7<1:
+            cv2.imwrite('./train/{}.jpg'.format(a), img, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
+            a = a + 1
+
 

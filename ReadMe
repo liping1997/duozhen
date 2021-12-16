@@ -14,7 +14,7 @@
 
 - Train a model:
 ```
-python train.py --dataroot ./datasets/aaaaa --name FA_sequence --model pix2seq --n_epochs 50 --n_epochs_decay 50 --load_size 512 --crop_size 256
+python train.py --dataroot ./dataset --name FA_sequence --model seq2pix --netG0 gen --netG G --netD SD
 
 
 

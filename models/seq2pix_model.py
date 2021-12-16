@@ -168,3 +168,5 @@ class Seq2PixModel(BaseModel):
             self.optimizer_G.step()  # udpate G's weights
             self.pic_num=self.pic_num+1
 
+
+
