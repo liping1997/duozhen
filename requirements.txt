@@ -1,0 +1,34 @@
+certifi==2020.11.8
+chardet==3.0.4
+cycler==0.10.0
+Cython==0.29.21
+dataclasses==0.7
+dominate==2.6.0
+idna==2.10
+jsonpatch==1.26
+jsonpointer==2.0
+kiwisolver @ file:///tmp/build/80754af9/kiwisolver_1604014557000/work
+matplotlib @ file:///tmp/build/80754af9/matplotlib-base_1603373816490/work
+mkl-fft==1.2.0
+mkl-random==1.1.1
+mkl-service==2.3.0
+numpy @ file:///tmp/build/80754af9/numpy_and_numpy_base_1603487797006/work
+olefile==0.46
+Pillow @ file:///tmp/build/80754af9/pillow_1603822238230/work
+pycocotools==2.0.2
+pyparsing==2.4.7
+python-dateutil==2.8.1
+pyzmq==19.0.2
+requests==2.24.0
+scipy==1.1.0
+six==1.15.0
+torch==1.7.0
+torchaudio==0.7.0a0+ac17b64
+torchfile==0.1.0
+torchvision==0.8.1
+tornado==6.1
+tqdm==4.58.0
+typing-extensions @ file:///tmp/build/80754af9/typing_extensions_1598376058250/work
+urllib3==1.25.11
+visdom==0.1.8.9
+websocket-client==0.57.0

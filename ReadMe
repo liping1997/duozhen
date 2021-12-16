@@ -1,0 +1,31 @@
+## Prerequisites
+- Linux or macOS
+- Python 3
+- CPU or NVIDIA GPU + CUDA CuDNN
+
+## Setting enviroments(Installation)
+
+-创建环境： conda create --name FA_sequence python=3.6
+-激活环境： conda activate FA_sequence
+-依赖库安装： pip install -r requirements.txt
+
+
+### Train/Test
+
+- Train a model:
+```
+python train.py --dataroot ./datasets/aaaaa --name FA_sequence --model pix2seq --n_epochs 50 --n_epochs_decay 50 --load_size 512 --crop_size 256
+
+
+
+```
+- Test the model:
+```
+results,datasets/test,save 三个文件夹中都会生成文件
+python test.py --dataroot ./datasets/aaaaa --name FA_sequence --model pix2seq --preprocess none
+
+```
+
+
+
+
