@@ -4,11 +4,44 @@ import torch.nn as nn
 from torch.nn.utils import spectral_norm
 from torchsummary import summary
 
+###########################################################################################
+
+class ChannelAttention(nn.Module):
+    def __init__(self, in_planes, ratio=16):
+        super(ChannelAttention, self).__init__()
+        self.avg_pool = nn.AdaptiveAvgPool2d(1)
+        self.max_pool = nn.AdaptiveMaxPool2d(1)
+
+        self.fc = nn.Sequential(nn.Conv2d(in_planes, in_planes // 16, 1, bias=False),
+                                nn.ReLU(),
+                                nn.Conv2d(in_planes // 16, in_planes, 1, bias=False))
+        self.sigmoid = nn.Sigmoid()
+
+    def forward(self, x):
+        avg_out = self.fc(self.avg_pool(x))
+        max_out = self.fc(self.max_pool(x))
+        out = avg_out + max_out
+        return self.sigmoid(out)
 
 
 
+class BasicBlock(nn.Module):
+    expansion = 1
 
+    def __init__(self, planes):
+        super(BasicBlock, self).__init__()
 
+        self.ca = ChannelAttention(planes)
+        self.relu = nn.ReLU(inplace=True)
+
+    def forward(self, x):
+        residual = x
+        out = self.ca(x) * x
+        out += residual
+        out = self.relu(out)
+        return out
+
+############################################################################################
 
 class ResnetBlock(nn.Module):
 
@@ -16,6 +49,7 @@ class ResnetBlock(nn.Module):
 
         super(ResnetBlock, self).__init__()
         self.conv_block = self.build_conv_block(dim, padding_type, norm_layer, use_dropout, use_bias)
+        self.channel_attenton_block=BasicBlock(256)
 
     def build_conv_block(self, dim, padding_type, norm_layer, use_dropout, use_bias):
 
@@ -48,7 +82,9 @@ class ResnetBlock(nn.Module):
         return nn.Sequential(*conv_block)
 
     def forward(self, x):
-        out = x + self.conv_block(x)  # add skip connections
+        out=self.conv_block(x)
+        out=self.channel_attenton_block(out)
+        out=x+out
         return out
 
 # net=ResnetGenerator().to('cuda')
@@ -147,3 +183,5 @@ class SD(nn.Module):
 
     def forward(self, input):
         return self.model(input)
+
+

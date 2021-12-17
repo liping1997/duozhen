@@ -70,8 +70,11 @@ class Visualizer():
         #这段注释掉了，display_id师姐设置为零，因此下面这段代码没啥用
         # if self.display_id > 0:  # connect to a visdom server given <display_port> and <display_server>
         #     import visdom
+        #
         #     self.ncols = opt.display_ncols
+        #
         #     self.vis = visdom.Visdom(server=opt.display_server, port=opt.display_port, env=opt.display_env)
+        #
         #     if not self.vis.check_connection():
         #         self.create_visdom_connections()
 
@@ -167,19 +170,19 @@ class Visualizer():
 
             # update website
             #下面这段也注释掉了，因为不想用html
-            # webpage = html.HTML(self.web_dir, 'Experiment name = %s' % self.name, refresh=1)
-            # for n in range(epoch, 0, -1):
-            #     webpage.add_header('epoch [%d]' % n)
-            #     ims, txts, links = [], [], []
-            #
-            #     for label, image_numpy in visuals.items():
-            #         image_numpy = util.tensor2im(image)
-            #         img_path = 'epoch%.3d_%s.png' % (n, label)
-            #         ims.append(img_path)
-            #         txts.append(label)
-            #         links.append(img_path)
-            #     webpage.add_images(ims, txts, links, width=self.win_size)
-            # webpage.save()
+            webpage = html.HTML(self.web_dir, 'Experiment name = %s' % self.name, refresh=1)
+            for n in range(epoch, 0, -1):
+                webpage.add_header('epoch [%d]' % n)
+                ims, txts, links = [], [], []
+
+                for label, image_numpy in visuals.items():
+                    image_numpy = util.tensor2im(image)
+                    img_path = 'epoch%.3d_%s.png' % (n, label)
+                    ims.append(img_path)
+                    txts.append(label)
+                    links.append(img_path)
+                webpage.add_images(ims, txts, links, width=self.win_size)
+            webpage.save()
 
     def plot_current_losses(self, epoch, counter_ratio, losses):
         """display the current losses on visdom display: dictionary of error labels and values
