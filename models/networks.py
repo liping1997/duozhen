@@ -5,6 +5,7 @@ import functools
 from torch.optim import lr_scheduler
 import torch.nn.functional as F
 from models.abc import *
+from models.abcd import *
 ###############################################################################
 # Helper Functions
 ###############################################################################
@@ -210,6 +211,11 @@ def define_D(input_nc, ndf, netD, is_second_train, n_layers_D=3, norm='batch', i
         net = PixelDiscriminator(input_nc, ndf, norm_layer=norm_layer)
     elif netD == 'SD':
         net = SD()
+    elif netD == 'SD1':
+        net = SD1()
+    elif netD == 'SD2':
+        net = SD2()
+
     else:
         raise NotImplementedError('Discriminator model name [%s] is not recognized' % netD)
     return init_net(net, is_second_train,init_type, init_gain, gpu_ids)
@@ -237,7 +243,7 @@ class GANLoss(nn.Module):
         LSGAN needs no sigmoid. vanilla GANs will handle it with BCEWithLogitsLoss.
         """
         super(GANLoss, self).__init__()
-        self.register_buffer('real_label', torch.tensor(target_real_label))
+        self.register_buffer('real_label', torch.tensor(target_real_label))            #register_buffer 定义的参数不会更新
         self.register_buffer('fake_label', torch.tensor(target_fake_label))
         self.gan_mode = gan_mode
         if gan_mode == 'lsgan':

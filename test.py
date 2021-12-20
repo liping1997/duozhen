@@ -41,17 +41,17 @@ import numpy as np
 
 
 if __name__ == '__main__':
-    """
-    下面这段代码主要用于裁剪图片，生成用于测试所需要的图片,保存在datasets/aaaaa/test文件夹下      hstack水平拼接 vstack垂直拼接
-    """
-    dir_num=len(os.listdir('./test'))
-    for k in range(dir_num):
-        img = cv2.imread('./test/{}.jpg'.format(k))
-        a, b, c, d = cutimg(img,49)
-        for i in range(7):
-            for j in range(7):
-                img1 = np.hstack((a[i][j], b[i][j], c[i][j], d[i][j]))
-                cv2.imwrite('./datasets/aaaaa/test/{}_{}_{}.jpg'.format(k,i,j), img1,[int(cv2.IMWRITE_JPEG_QUALITY), 100])
+    # """
+    # 下面这段代码主要用于裁剪图片，生成用于测试所需要的图片,保存在datasets/aaaaa/test文件夹下      hstack水平拼接 vstack垂直拼接
+    # """
+    # dir_num=len(os.listdir('./test'))
+    # for k in range(dir_num):
+    #     img = cv2.imread('./test/{}.jpg'.format(k))
+    #     a, b, c, d = cutimg(img,49)
+    #     for i in range(7):
+    #         for j in range(7):
+    #             img1 = np.hstack((a[i][j], b[i][j], c[i][j], d[i][j]))
+    #             cv2.imwrite('./datasets/aaaaa/test/{}_{}_{}.jpg'.format(k,i,j), img1,[int(cv2.IMWRITE_JPEG_QUALITY), 100])
 
 
     opt = TestOptions().parse()  # get train options
@@ -88,58 +88,58 @@ if __name__ == '__main__':
         save_images(webpage, visuals, img_path, aspect_ratio=opt.aspect_ratio, width=opt.display_winsize)
     webpage.save()  # save the HTML
 
-    """
-    下面这段代码用于将测试生成的图片拼接成一张完整的图片,保存在save文件夹中
-    """
-    dat_list1 = []
-    dat_list2 = []
-    dat_list3 = []
-    for k in range(dir_num):
-        for i in range(7):
-            for j in range(7):
-                img1 = cv2.imread('./results/FA_sequence/test_latest/images/{}_{}_{}_{}.png'.format(k,i, j, 'fake_B0'))
-                img2 = cv2.imread('./results/FA_sequence/test_latest/images/{}_{}_{}_{}.png'.format(k,i, j, 'fake_B1'))
-                img3 = cv2.imread('./results/FA_sequence/test_latest/images/{}_{}_{}_{}.png'.format(k,i, j, 'fake_B2'))
-                dat_list1.append(img1)
-                dat_list2.append(img2)
-                dat_list3.append(img3)
-    for i in range(dir_num):
-        h1 = imgFusion(dat_list1[0+49*i:7+49*i])
-        h2 = imgFusion(dat_list1[7+49*i:14+49*i])
-        h3 = imgFusion(dat_list1[14+49*i:21+49*i])
-        h4 = imgFusion(dat_list1[21+49*i:28+49*i])
-        h5 = imgFusion(dat_list1[28+49*i:35+49*i])
-        h6 = imgFusion(dat_list1[35+49*i:42+49*i])
-        h7 = imgFusion(dat_list1[42+49*i:49+49*i])
-        hh1=[h1,h2,h3,h4,h5,h6,h7]
-        dat1=imgFusion(hh1,64,False)
-        h8 = imgFusion(dat_list2[0+49*i:7+49*i])
-        h9 = imgFusion(dat_list2[7+49*i:14+49*i])
-        h10 = imgFusion(dat_list2[14+49*i:21+49*i])
-        h11 = imgFusion(dat_list2[21+49*i:28+49*i])
-        h12 = imgFusion(dat_list2[28+49*i:35+49*i])
-        h13 = imgFusion(dat_list2[35+49*i:42+49*i])
-        h14 = imgFusion(dat_list2[42+49*i:49+49*i])
-        hh2 = [h8,h9,h10,h11,h12,h13,h14]
-        dat2 = imgFusion(hh2, 64, False)
-        h15 = imgFusion(dat_list3[0+49*i:7+49*i])
-        h16 = imgFusion(dat_list3[7+49*i:14+49*i])
-        h17 = imgFusion(dat_list3[14+49*i:21+49*i])
-        h18 = imgFusion(dat_list3[21+49*i:28+49*i])
-        h19 = imgFusion(dat_list3[28+49*i:35+49*i])
-        h20 = imgFusion(dat_list3[35+49*i:42+49*i])
-        h21 = imgFusion(dat_list3[42+49*i:49+49*i])
-        hh3 = [h15,h16,h17,h18,h19,h20,h21]
-        dat3 = imgFusion(hh3, 64, False)
-
-        dat4=np.zeros((512,512,3))
-        dat4=np.uint8(dat4)
-        dat=np.hstack((dat4,dat1,dat2,dat3))
-        img4=cv2.imread('./test/{}.jpg'.format(i))
-        print(dat.shape,img4.shape)
-        dat=np.vstack((img4,dat))
-
-
-        cv2.imwrite('save/{}.jpg'.format(i), dat,[int(cv2.IMWRITE_JPEG_QUALITY), 100])
-        print("第{}张图片已经保存".format(i))
+    # """
+    # 下面这段代码用于将测试生成的图片拼接成一张完整的图片,保存在save文件夹中
+    # """
+    # dat_list1 = []
+    # dat_list2 = []
+    # dat_list3 = []
+    # for k in range(dir_num):
+    #     for i in range(7):
+    #         for j in range(7):
+    #             img1 = cv2.imread('./results/FA_sequence/test_latest/images/{}_{}_{}_{}.png'.format(k,i, j, 'fake_B0'))
+    #             img2 = cv2.imread('./results/FA_sequence/test_latest/images/{}_{}_{}_{}.png'.format(k,i, j, 'fake_B1'))
+    #             img3 = cv2.imread('./results/FA_sequence/test_latest/images/{}_{}_{}_{}.png'.format(k,i, j, 'fake_B2'))
+    #             dat_list1.append(img1)
+    #             dat_list2.append(img2)
+    #             dat_list3.append(img3)
+    # for i in range(dir_num):
+    #     h1 = imgFusion(dat_list1[0+49*i:7+49*i])
+    #     h2 = imgFusion(dat_list1[7+49*i:14+49*i])
+    #     h3 = imgFusion(dat_list1[14+49*i:21+49*i])
+    #     h4 = imgFusion(dat_list1[21+49*i:28+49*i])
+    #     h5 = imgFusion(dat_list1[28+49*i:35+49*i])
+    #     h6 = imgFusion(dat_list1[35+49*i:42+49*i])
+    #     h7 = imgFusion(dat_list1[42+49*i:49+49*i])
+    #     hh1=[h1,h2,h3,h4,h5,h6,h7]
+    #     dat1=imgFusion(hh1,64,False)
+    #     h8 = imgFusion(dat_list2[0+49*i:7+49*i])
+    #     h9 = imgFusion(dat_list2[7+49*i:14+49*i])
+    #     h10 = imgFusion(dat_list2[14+49*i:21+49*i])
+    #     h11 = imgFusion(dat_list2[21+49*i:28+49*i])
+    #     h12 = imgFusion(dat_list2[28+49*i:35+49*i])
+    #     h13 = imgFusion(dat_list2[35+49*i:42+49*i])
+    #     h14 = imgFusion(dat_list2[42+49*i:49+49*i])
+    #     hh2 = [h8,h9,h10,h11,h12,h13,h14]
+    #     dat2 = imgFusion(hh2, 64, False)
+    #     h15 = imgFusion(dat_list3[0+49*i:7+49*i])
+    #     h16 = imgFusion(dat_list3[7+49*i:14+49*i])
+    #     h17 = imgFusion(dat_list3[14+49*i:21+49*i])
+    #     h18 = imgFusion(dat_list3[21+49*i:28+49*i])
+    #     h19 = imgFusion(dat_list3[28+49*i:35+49*i])
+    #     h20 = imgFusion(dat_list3[35+49*i:42+49*i])
+    #     h21 = imgFusion(dat_list3[42+49*i:49+49*i])
+    #     hh3 = [h15,h16,h17,h18,h19,h20,h21]
+    #     dat3 = imgFusion(hh3, 64, False)
+    #
+    #     dat4=np.zeros((512,512,3))
+    #     dat4=np.uint8(dat4)
+    #     dat=np.hstack((dat4,dat1,dat2,dat3))
+    #     img4=cv2.imread('./test/{}.jpg'.format(i))
+    #     print(dat.shape,img4.shape)
+    #     dat=np.vstack((img4,dat))
+    #
+    #
+    #     cv2.imwrite('save/{}.jpg'.format(i), dat,[int(cv2.IMWRITE_JPEG_QUALITY), 100])
+    #     print("第{}张图片已经保存".format(i))
 

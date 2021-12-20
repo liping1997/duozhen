@@ -59,14 +59,20 @@ class Seq2PixModel(BaseModel):
             self.perceptual_loss = PerceptualLoss(torch.nn.MSELoss())
             # self.saliency_loss = torch.nn.MSELoss()
             # initialize optimizers; schedulers will be automatically created by function <BaseModel.setup>.
-            self.optimizer_G = torch.optim.Adam(
-                itertools.chain(self.netG0.parameters(), self.netG1.parameters(), self.netG2.parameters()), lr=opt.lr,
+            self.optimizer_G1 = torch.optim.Adam(
+                itertools.chain(self.netG.parameters(),self.netG0.parameters()), lr=opt.lr,
+                betas=(opt.beta1, 0.999))
+            self.optimizer_G2 = torch.optim.Adam(
+                itertools.chain(self.netG.parameters(), self.netG1.parameters()), lr=opt.lr,
+                betas=(opt.beta1, 0.999))
+            self.optimizer_G3 = torch.optim.Adam(
+                itertools.chain(self.netG.parameters(), self.netG2.parameters()), lr=opt.lr,
                 betas=(opt.beta1, 0.999))
             self.optimizer_D = torch.optim.Adam(
                 itertools.chain(self.netD0.parameters()), lr=opt.lr,
                 betas=(opt.beta1, 0.999))
-            self.optimizers.append(self.optimizer_G)
-            self.optimizers.append(self.optimizer_D)
+            # self.optimizers.append(self.optimizer_G)
+            # self.optimizers.append(self.optimizer_D)
         self.pic_num=0
 
     def set_input(self, input):
@@ -138,6 +144,7 @@ class Seq2PixModel(BaseModel):
                                                                                            self.fake_B0, self.real_B0)
             self.loss_G = self.loss_G0_GAN + self.loss_G0_L1 + self.loss_G0_perceptual
             self.loss_G.backward()
+
         if self.pic_num%3==1:
             self.loss_G1_GAN, self.loss_G1_L1, self.loss_G1_perceptual = self.backward_G_basic(self.netD0, self.real_A,
                                                                                            self.fake_B1, self.real_B1)
@@ -163,9 +170,18 @@ class Seq2PixModel(BaseModel):
             self.optimizer_D.step()  # update D's weights
             # update G
             self.set_requires_grad([self.netD0], False)  # D requires no gradients when optimizing G
-            self.optimizer_G.zero_grad()  # set G's gradients to zero
-            self.backward_G()  # calculate graidents for G
-            self.optimizer_G.step()  # udpate G's weights
+            if self.pic_num%3==0:
+                self.optimizer_G1.zero_grad()  # set G's gradients to zero
+                self.backward_G()  # calculate graidents for G
+                self.optimizer_G1.step()  # udpate G's weights
+            if self.pic_num%3==1:
+                self.optimizer_G2.zero_grad()  # set G's gradients to zero
+                self.backward_G()  # calculate graidents for G
+                self.optimizer_G2.step()  # udpate G's weights
+            if self.pic_num%3==2:
+                self.optimizer_G3.zero_grad()  # set G's gradients to zero
+                self.backward_G()  # calculate graidents for G
+                self.optimizer_G3.step()  # udpate G's weights
             self.pic_num=self.pic_num+1
 
 
