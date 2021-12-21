@@ -41,17 +41,7 @@ import numpy as np
 
 
 if __name__ == '__main__':
-    # """
-    # 下面这段代码主要用于裁剪图片，生成用于测试所需要的图片,保存在datasets/aaaaa/test文件夹下      hstack水平拼接 vstack垂直拼接
-    # """
-    # dir_num=len(os.listdir('./test'))
-    # for k in range(dir_num):
-    #     img = cv2.imread('./test/{}.jpg'.format(k))
-    #     a, b, c, d = cutimg(img,49)
-    #     for i in range(7):
-    #         for j in range(7):
-    #             img1 = np.hstack((a[i][j], b[i][j], c[i][j], d[i][j]))
-    #             cv2.imwrite('./datasets/aaaaa/test/{}_{}_{}.jpg'.format(k,i,j), img1,[int(cv2.IMWRITE_JPEG_QUALITY), 100])
+
 
 
     opt = TestOptions().parse()  # get train options

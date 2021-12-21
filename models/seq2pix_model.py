@@ -38,14 +38,14 @@ class Seq2PixModel(BaseModel):
         else:  # during train time, only load G
             self.model_names = ['G0', 'G1', 'G2','G']
         # define networks (both generator and discriminator)
-        self.netG=networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG0, opt.is_second_train, opt.norm)
-        self.netG0 = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG, opt.is_second_train, opt.norm,
+        self.netG=networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG1, opt.is_second_train, opt.norm)
+        self.netG0 = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG2, opt.is_second_train, opt.norm,
                                        not opt.no_dropout, False, opt.init_type, opt.init_gain, self.gpu_ids)
 
-        self.netG1 = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG, opt.is_second_train, opt.norm,
+        self.netG1 = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG2, opt.is_second_train, opt.norm,
                                        not opt.no_dropout, True, opt.init_type, opt.init_gain, self.gpu_ids)
 
-        self.netG2 = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG, opt.is_second_train, opt.norm,
+        self.netG2 = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG2, opt.is_second_train, opt.norm,
                                        not opt.no_dropout, True, opt.init_type, opt.init_gain, self.gpu_ids)
 
         if self.isTrain:  # define a discriminator; conditional GANs need to take both input and output images; Therefore, #channels for D is input_nc + output_nc
@@ -71,8 +71,10 @@ class Seq2PixModel(BaseModel):
             self.optimizer_D = torch.optim.Adam(
                 itertools.chain(self.netD0.parameters()), lr=opt.lr,
                 betas=(opt.beta1, 0.999))
-            # self.optimizers.append(self.optimizer_G)
-            # self.optimizers.append(self.optimizer_D)
+            self.optimizers.append(self.optimizer_G1)
+            self.optimizers.append(self.optimizer_G2)
+            self.optimizers.append(self.optimizer_G3)
+            self.optimizers.append(self.optimizer_D)
         self.pic_num=0
 
     def set_input(self, input):

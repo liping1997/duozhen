@@ -29,5 +29,5 @@ import os
 #             cv2.imwrite('./train/{}.jpg'.format(a), img, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
 #             a = a + 1
 
-for n in range(1,3):
-    print(n)
+a=[ 1 for i in range(3)]
+print(a)
