@@ -28,6 +28,3 @@ import os
 #         if img2<1 and img6<1 and img7<1:
 #             cv2.imwrite('./train/{}.jpg'.format(a), img, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
 #             a = a + 1
-
-a=[ 1 for i in range(3)]
-print(a)

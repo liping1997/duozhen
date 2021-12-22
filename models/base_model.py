@@ -153,11 +153,10 @@ class BaseModel(ABC):
             if isinstance(name, str):
                 save_filename = '%s_net_%s.pth' % (epoch, name)
                 save_path = os.path.join(self.save_dir, save_filename)
-                net = getattr(self, 'net' + name)
-                print(len(self.gpu_ids))
+                net = getattr(self, 'net' + name)                  #gpu上
                 if len(self.gpu_ids) > 0 and torch.cuda.is_available():
-                    torch.save(net.module.cpu().state_dict(), save_path)
-                    net.cuda(self.gpu_ids[0])
+                    torch.save(net.module.cpu().state_dict(), save_path)  #cpu上
+                    net.cuda(self.gpu_ids[0])                        #gpu上
                 else:
                     torch.save(net.cpu().state_dict(), save_path)
 
@@ -219,11 +218,7 @@ class BaseModel(ABC):
         print('-----------------------------------------------')
 
     def set_requires_grad(self, nets, requires_grad=False):
-        """Set requies_grad=Fasle for all the networks to avoid unnecessary computations
-        Parameters:
-            nets (network list)   -- a list of networks
-            requires_grad (bool)  -- whether the networks require gradients or not
-        """
+
         if not isinstance(nets, list):
             nets = [nets]
         for net in nets:

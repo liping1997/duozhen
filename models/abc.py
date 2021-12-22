@@ -184,4 +184,32 @@ class SD(nn.Module):
     def forward(self, input):
         return self.model(input)
 
+class ge(nn.Module):
+    def __init__(self, input_nc=3, output_nc=3, ngf=64, norm_layer=nn.BatchNorm2d):
+        super(ge, self).__init__()
+        if type(norm_layer) == functools.partial:
+            use_bias = norm_layer.func == nn.InstanceNorm2d
+        else:
+            use_bias = norm_layer == nn.InstanceNorm2d
 
+        model = [nn.ReflectionPad2d(3),
+                 nn.Conv2d(input_nc, ngf, kernel_size=7, padding=0, bias=use_bias),
+                 norm_layer(ngf),
+                 nn.ReLU(True)]
+
+
+        self.model = nn.Sequential(*model)
+    def forward(self, x):
+        return self.model(x)
+net=gen().to('cuda')
+net.load_state_dict(torch.load('../checkpoints/FA_sequence/latest_net_G.pth',map_location='cuda'))
+dict=net.state_dict()
+
+net1=ge().to('cuda')
+
+
+
+pretrained_dict = {k: v for k, v in dict.items() if k in net.state_dict()}
+
+for i,j in dict:
+    print(i)

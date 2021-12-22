@@ -6,7 +6,7 @@ import numpy as np
 
 
 
-def cutimg(img, num,overlap_factor=128):
+def cutimg(img, num=9,overlap_factor=128):
 
 
     """a,b,c,d,分别存储A,B1,B2,B3的256*256块"""
