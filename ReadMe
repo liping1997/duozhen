@@ -14,7 +14,7 @@
 
 - Train a model:
 ```
-python train.py --dataroot ./dataset --name FA_sequence --model seq2pix --netG0 gen --netG G --netD SD
+python train.py --dataroot ./dataset --name FA_sequence --model seq2pix
 
 
 

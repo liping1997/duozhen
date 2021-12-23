@@ -36,8 +36,10 @@ class BaseOptions():
         parser.add_argument('--netD2', type=str, default='SD2',
                             help='specify discriminator architecture [basic | n_layers | pixel]. The basic model is a 70x70 PatchGAN. n_layers allows you to specify the layers in the discriminator')
         parser.add_argument('--netG', type=str, default='resnet_9blocks', help='specify generator architecture [resnet_9blocks | resnet_6blocks | attention_resnet_9blocks | attention_resnet_6blocks | unet_256 | unet_128]')
-        parser.add_argument('--netG1', type=str, default='gen')
-        parser.add_argument('--netG2', type=str, default='G', help='specify generator architecture [resnet_9blocks | resnet_6blocks | attention_resnet_9blocks | attention_resnet_6blocks | unet_256 | unet_128]')
+        parser.add_argument('--netg1', type=str, default='g1')
+        parser.add_argument('--netg2', type=str, default='g2',)
+        parser.add_argument('--netG1', type=str, default='G1')
+        parser.add_argument('--netG2', type=str, default='G2', help='specify generator architecture [resnet_9blocks | resnet_6blocks | attention_resnet_9blocks | attention_resnet_6blocks | unet_256 | unet_128]')
         parser.add_argument('--n_layers_D', type=int, default=3, help='only used if netD==n_layers')
         parser.add_argument('--norm', type=str, default='instance', help='instance normalization or batch normalization [instance | batch | none]')
         parser.add_argument('--init_type', type=str, default='normal', help='network initialization [normal | xavier | kaiming | orthogonal]')

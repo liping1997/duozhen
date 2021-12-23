@@ -47,6 +47,7 @@ class ResnetBlock(nn.Module):
 
     def __init__(self, dim, padding_type, norm_layer, use_dropout, use_bias):
 
+
         super(ResnetBlock, self).__init__()
         self.conv_block = self.build_conv_block(dim, padding_type, norm_layer, use_dropout, use_bias)
         self.channel_attenton_block=BasicBlock(256)
@@ -67,6 +68,7 @@ class ResnetBlock(nn.Module):
         conv_block += [nn.Conv2d(dim, dim, kernel_size=3, padding=p, bias=use_bias), norm_layer(dim), nn.ReLU(True)]
         if use_dropout:
             conv_block += [nn.Dropout(0.5)]
+
 
         p = 0
         if padding_type == 'reflect':
@@ -91,9 +93,9 @@ class ResnetBlock(nn.Module):
 # summary(net,(3,256,256))
 
 
-class gen(nn.Module):
+class G1(nn.Module):
     def __init__(self, input_nc=3, output_nc=3, ngf=64, norm_layer=nn.BatchNorm2d):
-        super(gen, self).__init__()
+        super(G1, self).__init__()
         if type(norm_layer) == functools.partial:
             use_bias = norm_layer.func == nn.InstanceNorm2d
         else:
@@ -114,11 +116,11 @@ class gen(nn.Module):
     def forward(self, x):
         return self.model(x)
 
-class G(nn.Module):
-    def __init__(self, input_nc=3, output_nc=3, ngf=64, norm_layer=nn.BatchNorm2d, use_dropout=False, n_blocks=6, padding_type='reflect'):
+class G2(nn.Module):
+    def __init__(self, input_nc=3, output_nc=3, ngf=64, norm_layer=nn.BatchNorm2d, use_dropout=True, n_blocks=6, padding_type='reflect'):
 
         assert(n_blocks >= 0)
-        super(G, self).__init__()
+        super(G2, self).__init__()
         if type(norm_layer) == functools.partial:
             use_bias = norm_layer.func == nn.InstanceNorm2d
         else:
@@ -128,7 +130,6 @@ class G(nn.Module):
 
         mult = 2 ** n_downsampling
         for i in range(n_blocks):       # add ResNet blocks
-
             model += [ResnetBlock(ngf * mult, padding_type=padding_type, norm_layer=norm_layer, use_dropout=use_dropout, use_bias=use_bias)]
 
         for i in range(n_downsampling):  # add upsampling layers
@@ -204,5 +205,15 @@ class SD2(nn.Module):
         return self.model(input)
 
 
-# net=SD2().to('cuda')
-# summary(net,(256,32,32))
+
+
+# #加载预训练模型
+# model=gen().to('cuda')
+# model.load_state_dict(torch.load('../checkpoints/FFA_res_lp_lsal/latest_net_G.pth'))
+# #自定义模型
+# net=ge().to('cuda')
+#
+#
+# dict={k: v for k, v in model.state_dict().items() if k in net.state_dict()}
+# net.load_state_dict(dict)
+

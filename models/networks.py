@@ -161,10 +161,16 @@ def define_G(input_nc, output_nc, ngf, netG, is_second_train, norm='batch', use_
         net = UnetGenerator(input_nc, output_nc, 7, ngf, norm_layer=norm_layer, use_dropout=use_dropout)
     elif netG == 'unet_256':
         net = UnetGenerator(input_nc, output_nc, 8, ngf, norm_layer=norm_layer, use_dropout=use_dropout)
-    elif netG == 'G':
-        net = G(input_nc=3, output_nc=3, ngf=64, norm_layer=nn.BatchNorm2d, use_dropout=False, n_blocks=6, padding_type='reflect')
-    elif netG == 'gen':
-        net = gen(input_nc=3, output_nc=3, ngf=64, norm_layer=nn.BatchNorm2d)
+    elif netG == 'g2':
+        net = g2(input_nc=3, output_nc=3, ngf=64, norm_layer=nn.BatchNorm2d, use_dropout=use_dropout, n_blocks=6, padding_type='reflect')
+
+    elif netG == 'g1':
+        net = g1(input_nc=3, output_nc=3, ngf=64, norm_layer=nn.BatchNorm2d)
+    elif netG == 'G2':
+        net = G2(input_nc=3, output_nc=3, ngf=64, norm_layer=nn.BatchNorm2d, use_dropout=use_dropout, n_blocks=6,
+            padding_type='reflect')
+    elif netG == 'G1':
+        net = G1(input_nc=3, output_nc=3, ngf=64, norm_layer=nn.BatchNorm2d)
     else:
         raise NotImplementedError('Generator model name [%s] is not recognized' % netG)
     return init_net(net, is_second_train, init_type, init_gain, gpu_ids)

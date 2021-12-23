@@ -38,17 +38,17 @@ def finalpicture(test_folder,input_folder,num,save_folder):      #test_folder和
 
         hh1=[h1,h2,h3]
         dat1=imgFusion(hh1,128,False)
-        h4 = imgFusion(dat_list1[0 + 9 * i:3 + 9 * i])
-        h5 = imgFusion(dat_list1[3 + 9 * i:6 + 9 * i])
-        h6 = imgFusion(dat_list1[6 + 9 * i:9 + 9 * i])
+        h4 = imgFusion(dat_list2[0 + 9 * i:3 + 9 * i])
+        h5 = imgFusion(dat_list2[3 + 9 * i:6 + 9 * i])
+        h6 = imgFusion(dat_list2[6 + 9 * i:9 + 9 * i])
 
         hh2 = [h4,h5,h6]
         dat2 = imgFusion(hh2, 128, False)
-        h7 = imgFusion(dat_list1[0 + 9 * i:3 + 9 * i])
-        h8 = imgFusion(dat_list1[3 + 9 * i:6 + 9 * i])
-        h9 = imgFusion(dat_list1[6 + 9 * i:9 + 9 * i])
+        h7 = imgFusion(dat_list3[0 + 9 * i:3 + 9 * i])
+        h8 = imgFusion(dat_list3[3 + 9 * i:6 + 9 * i])
+        h9 = imgFusion(dat_list3[6 + 9 * i:9 + 9 * i])
 
-        hh3 = [h7,h8.h9]
+        hh3 = [h7,h8,h9]
         dat3 = imgFusion(hh3, 128, False)
 
         dat4=np.zeros((512,512,3))
@@ -61,3 +61,6 @@ def finalpicture(test_folder,input_folder,num,save_folder):      #test_folder和
 
         cv2.imwrite('{}/{}.jpg'.format(save_folder,i), dat,[int(cv2.IMWRITE_JPEG_QUALITY), 100])
         print("第{}张图片已经保存".format(i))
+
+# generatetestpicture('./test','dataset/test',num=9)
+finalpicture('./test','./results/FFA_res_lp_lsal/test_latest/images',3,'save')

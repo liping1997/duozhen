@@ -91,9 +91,9 @@ class ResnetBlock(nn.Module):
 # summary(net,(3,256,256))
 
 
-class gen(nn.Module):
+class g1(nn.Module):
     def __init__(self, input_nc=3, output_nc=3, ngf=64, norm_layer=nn.BatchNorm2d):
-        super(gen, self).__init__()
+        super(g1, self).__init__()
         if type(norm_layer) == functools.partial:
             use_bias = norm_layer.func == nn.InstanceNorm2d
         else:
@@ -114,11 +114,11 @@ class gen(nn.Module):
     def forward(self, x):
         return self.model(x)
 
-class G(nn.Module):
+class g2(nn.Module):
     def __init__(self, input_nc=3, output_nc=3, ngf=64, norm_layer=nn.BatchNorm2d, use_dropout=False, n_blocks=6, padding_type='reflect'):
 
         assert(n_blocks >= 0)
-        super(G, self).__init__()
+        super(g2, self).__init__()
         if type(norm_layer) == functools.partial:
             use_bias = norm_layer.func == nn.InstanceNorm2d
         else:
@@ -183,4 +183,8 @@ class SD(nn.Module):
 
     def forward(self, input):
         return self.model(input)
+
+
+
+
 

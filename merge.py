@@ -78,7 +78,7 @@ def ggg(img):
 #
 #     return img_new
 
-def imgFusion(imglist, overlap=64, left_right=True):
+def imgFusion(imglist, overlap=128, left_right=True):
 
 
 
@@ -118,7 +118,7 @@ def imgFusion(imglist, overlap=64, left_right=True):
 
 
 
-#
+
 # img=cv2.imread('./0.jpg')
 # a,b,c,d=cutimg(img,25)
 # h1=imgFusion(a[0],128)

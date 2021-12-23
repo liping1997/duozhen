@@ -62,7 +62,6 @@ class Pix2SeqModel(BaseModel):
         # define networks (both generator and discriminator)
         self.netG0 = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG, opt.is_second_train, opt.norm,
                                       not opt.no_dropout, False, opt.init_type, opt.init_gain, self.gpu_ids)
-
         self.netG1 = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG,  opt.is_second_train, opt.norm,
                                       not opt.no_dropout, True, opt.init_type, opt.init_gain, self.gpu_ids)
 

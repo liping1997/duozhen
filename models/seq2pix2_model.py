@@ -28,10 +28,10 @@ class Seq2Pix2Model(BaseModel):
         BaseModel.__init__(self, opt)
         # specify the training losses you want to print out. The training/train scripts will call <BaseModel.get_current_losses>
         self.loss_names = ['G0_GAN', 'G0_L1', 'G0_perceptual', 'D0_real', 'D0_fake',
-                           'G1_GAN', 'G1_L1', 'G1_perceptual',
-                           'G2_GAN', 'G2_L1', 'G2_perceptual', ]
+                           'G1_GAN', 'G1_L1', 'G1_perceptual', 'D1_real', 'D1_fake',
+                           'G2_GAN', 'G2_L1', 'G2_perceptual', 'D2_real', 'D2_fake']
         # specify the images you want to save/display. The training/train scripts will call <BaseModel.get_current_visuals>
-        self.visual_names = ['real_A', 'fake_B0', 'real_B0', 'fake_B1', 'real_B1', 'fake_B2', 'real_B2']
+        self.visual_names = ['real_A', 'fake_B0', 'real_B0','fake_B1','real_B1','fake_B2','real_B2' ]
         # specify the models you want to save to the disk. The training/train scripts will call <BaseModel.save_networks> and <BaseModel.load_networks>
         if self.isTrain:
             self.model_names = ['G0', 'D', 'G1',  'G2','G','D1','D2','D3']
@@ -41,7 +41,6 @@ class Seq2Pix2Model(BaseModel):
         self.netG=networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG1, opt.is_second_train, opt.norm)
         self.netG0 = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG2, opt.is_second_train, opt.norm,
                                        not opt.no_dropout, False, opt.init_type, opt.init_gain, self.gpu_ids)
-
         self.netG1 = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG2, opt.is_second_train, opt.norm,
                                        not opt.no_dropout, True, opt.init_type, opt.init_gain, self.gpu_ids)
 

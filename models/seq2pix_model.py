@@ -38,14 +38,13 @@ class Seq2PixModel(BaseModel):
         else:  # during train time, only load G
             self.model_names = ['G0', 'G1', 'G2','G']
         # define networks (both generator and discriminator)
-        self.netG=networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG1, opt.is_second_train, opt.norm)
-        self.netG0 = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG2, opt.is_second_train, opt.norm,
+        self.netG=networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netg1, opt.is_second_train, opt.norm)
+        self.netG0 = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netg2, opt.is_second_train, opt.norm,
                                        not opt.no_dropout, False, opt.init_type, opt.init_gain, self.gpu_ids)
-
-        self.netG1 = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG2, opt.is_second_train, opt.norm,
+        self.netG1 = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netg2, opt.is_second_train, opt.norm,
                                        not opt.no_dropout, True, opt.init_type, opt.init_gain, self.gpu_ids)
 
-        self.netG2 = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG2, opt.is_second_train, opt.norm,
+        self.netG2 = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netg2, opt.is_second_train, opt.norm,
                                        not opt.no_dropout, True, opt.init_type, opt.init_gain, self.gpu_ids)
 
         if self.isTrain:  # define a discriminator; conditional GANs need to take both input and output images; Therefore, #channels for D is input_nc + output_nc
