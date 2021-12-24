@@ -63,4 +63,4 @@ def finalpicture(test_folder,input_folder,num,save_folder):      #test_folder和
         print("第{}张图片已经保存".format(i))
 
 # generatetestpicture('./test','dataset/test',num=9)
-finalpicture('./test','./results/FFA_res_lp_lsal/test_latest/images',3,'save')
+# finalpicture('./test','./results/FFA_res_lp_lsal/test_latest/images',3,'save')

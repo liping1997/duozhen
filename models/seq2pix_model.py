@@ -28,10 +28,13 @@ class Seq2PixModel(BaseModel):
         BaseModel.__init__(self, opt)
         # specify the training losses you want to print out. The training/train scripts will call <BaseModel.get_current_losses>
         self.loss_names = ['G0_GAN', 'G0_L1', 'G0_perceptual', 'D0_real', 'D0_fake',
-                           'G1_GAN', 'G1_L1', 'G1_perceptual',
-                           'G2_GAN', 'G2_L1', 'G2_perceptual', ]
+                           'G1_GAN', 'G1_L1', 'G1_perceptual','D0_real', 'D0_fake',
+                           'G2_GAN', 'G2_L1', 'G2_perceptual', 'D0_real', 'D0_fake',]
         # specify the images you want to save/display. The training/train scripts will call <BaseModel.get_current_visuals>
         self.visual_names = ['real_A', 'fake_B0', 'real_B0', 'fake_B1', 'real_B1', 'fake_B2', 'real_B2']
+        # self.visual_names = ['real_A', 'fake_B0', 'real_B0']
+        # self.visual_names = ['real_A', 'real_B1', 'fake_B2']
+        # self.visual_names = ['real_A', 'fake_B2', 'real_B2']
         # specify the models you want to save to the disk. The training/train scripts will call <BaseModel.save_networks> and <BaseModel.load_networks>
         if self.isTrain:
             self.model_names = ['G0', 'D0', 'G1',  'G2','G']
@@ -75,6 +78,8 @@ class Seq2PixModel(BaseModel):
             self.optimizers.append(self.optimizer_G3)
             self.optimizers.append(self.optimizer_D)
         self.pic_num=0
+        # self.pic_num = 1
+        # self.pic_num = 2
 
     def set_input(self, input):
 

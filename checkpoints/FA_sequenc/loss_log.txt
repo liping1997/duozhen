@@ -1,0 +1,6 @@
+================ Training Loss (Fri Dec 24 13:45:03 2021) ================
+(epoch: 1, iters: 100, time: 1.197, data: 11.517) G0_GAN: 1.849 G0_L1: 15.510 G0_perceptual: 0.146 D0_real: 0.711 D0_fake: 0.263 G1_GAN: 2.028 G1_L1: 8.792 G1_perceptual: 0.097 G2_GAN: 1.565 G2_L1: 6.064 G2_perceptual: 0.056 
+(epoch: 1, iters: 200, time: 1.197, data: 0.001) G0_GAN: 2.946 G0_L1: 10.744 G0_perceptual: 0.096 D0_real: 0.028 D0_fake: 0.294 G1_GAN: 2.971 G1_L1: 7.572 G1_perceptual: 0.079 G2_GAN: 3.196 G2_L1: 9.700 G2_perceptual: 0.071 
+(epoch: 1, iters: 300, time: 1.204, data: 0.001) G0_GAN: 3.001 G0_L1: 14.027 G0_perceptual: 0.135 D0_real: 0.619 D0_fake: 0.098 G1_GAN: 2.468 G1_L1: 15.980 G1_perceptual: 0.148 G2_GAN: 3.149 G2_L1: 8.071 G2_perceptual: 0.069 
+(epoch: 1, iters: 400, time: 1.466, data: 0.001) G0_GAN: 1.402 G0_L1: 3.957 G0_perceptual: 0.045 D0_real: 0.853 D0_fake: 0.236 G1_GAN: 1.837 G1_L1: 6.865 G1_perceptual: 0.068 G2_GAN: 2.350 G2_L1: 5.532 G2_perceptual: 0.039 
+(epoch: 1, iters: 500, time: 1.204, data: 0.001) G0_GAN: 3.360 G0_L1: 17.016 G0_perceptual: 0.173 D0_real: 0.090 D0_fake: 0.198 G1_GAN: 3.414 G1_L1: 15.148 G1_perceptual: 0.183 G2_GAN: 3.134 G2_L1: 7.584 G2_perceptual: 0.072 
